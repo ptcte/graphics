@@ -1,4 +1,4 @@
-#Makefile for linux
+#Makefile for openGL/graphics
 
 #include /usr/include/make/commondefs
 
