@@ -17,7 +17,6 @@
 #define brickImageWidth 16
 #define brickImageHeight 16
 
-
 GLenum doubleBuffer;
 
 float black[3] = {
@@ -93,7 +92,11 @@ static void Init(void)
     static float nearest[] = {GL_NEAREST};
 
     glClearColor(0.0, 0.0, 0.0, 0.0);
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     glEnable(GL_DEPTH_TEST);
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
@@ -117,6 +120,7 @@ static void Init(void)
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, nearest);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, nearest);
     if (image) {
+<<<<<<< HEAD
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image->sizeX, image->sizeY,
               GL_RGB, GL_UNSIGNED_BYTE, image->data);
@@ -124,6 +128,15 @@ static void Init(void)
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, 4, brickImageWidth, brickImageHeight,
              0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid *)brickImage);
+=======
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image->sizeX, image->sizeY,
+              GL_RGB, GL_UNSIGNED_BYTE, image->data);
+    } else {
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, 4, brickImageWidth, brickImageHeight,
+             0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid *)brickImage);
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 
     quadObj = gluNewQuadric();
@@ -155,6 +168,7 @@ static void Key(unsigned char key, int x, int y)
 
     switch (key) {
       case 'X':
+<<<<<<< HEAD
     zRotation += 5;
     glutPostRedisplay();
     break;
@@ -318,6 +332,171 @@ static void Key(unsigned char key, int x, int y)
 
       case 27:
     exit(0);
+=======
+    zRotation += 5;
+    glutPostRedisplay();
+    break;
+      case 'x':
+    zRotation -= 5;
+    glutPostRedisplay();
+    break;
+
+      case '1':
+    gluQuadricDrawStyle(quadObj, GLU_FILL);
+    glutPostRedisplay();
+    break;
+      case '2':
+    gluQuadricDrawStyle(quadObj, GLU_POINT);
+    glutPostRedisplay();
+    break;
+      case '3':
+    gluQuadricDrawStyle(quadObj, GLU_LINE);
+    glutPostRedisplay();
+    break;
+      case '4':
+    gluQuadricDrawStyle(quadObj, GLU_SILHOUETTE);
+    glutPostRedisplay();
+    break;
+
+      case '0':
+    shade = !shade;
+    if (shade) {
+        glShadeModel(GL_SMOOTH);
+        gluQuadricNormals(quadObj, GLU_SMOOTH);
+    } else {
+        glShadeModel(GL_FLAT);
+        gluQuadricNormals(quadObj, GLU_FLAT);
+    }
+    glutPostRedisplay();
+    break;
+
+      case 'A':
+    stacks++;
+    glutPostRedisplay();
+    break;
+      case 'a':
+    stacks--;
+    glutPostRedisplay();
+    break;
+
+      case 'S':
+    slices++;
+    glutPostRedisplay();
+    break;
+      case 's':
+    slices--;
+    glutPostRedisplay();
+    break;
+
+      case 'd':
+    switch(orientation) {
+      case GLU_OUTSIDE:
+        orientation = GLU_INSIDE;
+        break;
+      case GLU_INSIDE:
+      default:
+        orientation = GLU_OUTSIDE;
+        break;
+    }
+    gluQuadricOrientation(quadObj, orientation);
+    glutPostRedisplay();
+    break;
+
+      case 'f':
+    whichQuadric = (whichQuadric + 1) & 0x03;
+    glutPostRedisplay();
+    break;
+
+      case 'G':
+    radius1 += 1;
+    glutPostRedisplay();
+    break;
+      case 'g':
+    radius1 -= 1;
+    glutPostRedisplay();
+    break;
+
+      case 'J':
+    radius2 += 1;
+    glutPostRedisplay();
+    break;
+      case 'j':
+    radius2 -= 1;
+    glutPostRedisplay();
+    break;
+
+      case 'H':
+    height += 2;
+    glutPostRedisplay();
+    break;
+      case 'h':
+    height -= 2;
+    glutPostRedisplay();
+    break;
+
+      case 'K':
+    angle1 += 5;
+    glutPostRedisplay();
+    break;
+      case 'k':
+    angle1 -= 5;
+    glutPostRedisplay();
+    break;
+
+      case 'L':
+    angle2 += 5;
+    glutPostRedisplay();
+    break;
+      case 'l':
+    angle2 -= 5;
+    glutPostRedisplay();
+    break;
+
+      case 'z':
+        texture = !texture;
+    if (texture) {
+        gluQuadricTexture(quadObj, GL_TRUE);
+        glEnable(GL_TEXTURE_2D);
+    } else {
+        gluQuadricTexture(quadObj, GL_FALSE);
+        glDisable(GL_TEXTURE_2D);
+    }
+    glutPostRedisplay();
+    break;
+
+      case 'q':
+    glDisable(GL_CULL_FACE);
+    glutPostRedisplay();
+    break;
+      case 'w':
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    glutPostRedisplay();
+    break;
+      case 'e':
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glutPostRedisplay();
+    break;
+
+      case 'r':
+    glFrontFace(GL_CW);
+    glutPostRedisplay();
+    break;
+      case 't':
+    glFrontFace(GL_CCW);
+    glutPostRedisplay();
+    break;
+
+      case 'y':
+    doDither = !doDither;
+    (doDither) ? glEnable(GL_DITHER) : glDisable(GL_DITHER);
+    glutPostRedisplay();
+    break;
+
+      case 27:
+    exit(0);
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 }
 
@@ -326,6 +505,7 @@ static void SpecialKey(int key, int x, int y)
 
     switch (key) {
       case GLUT_KEY_LEFT:
+<<<<<<< HEAD
     yRotation += 5;
     glutPostRedisplay();
     break;
@@ -341,6 +521,23 @@ static void SpecialKey(int key, int x, int y)
     xRotation -= 5;
     glutPostRedisplay();
     break;
+=======
+    yRotation += 5;
+    glutPostRedisplay();
+    break;
+      case GLUT_KEY_RIGHT:
+    yRotation -= 5;
+    glutPostRedisplay();
+    break;
+      case GLUT_KEY_UP:
+    xRotation += 5;
+    glutPostRedisplay();
+    break;
+      case GLUT_KEY_DOWN:
+    xRotation -= 5;
+    glutPostRedisplay();
+    break;
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 }
 
@@ -357,6 +554,7 @@ static void Draw(void)
     glColor3f(1.0, 1.0, 1.0);
     switch (whichQuadric) {
       case 0:
+<<<<<<< HEAD
     glTranslatef(0, 0, -height/20.0);
     gluCylinder(quadObj, radius1/10.0, radius2/10.0, height/10.0,
             slices, stacks);
@@ -377,6 +575,28 @@ static void Draw(void)
     glutSwapBuffers();
     } else {
     glFlush();
+=======
+    glTranslatef(0, 0, -height/20.0);
+    gluCylinder(quadObj, radius1/10.0, radius2/10.0, height/10.0,
+            slices, stacks);
+    break;
+      case 1:
+    gluSphere(quadObj, radius1/10.0, slices, stacks);
+    break;
+      case 2:
+    gluPartialDisk(quadObj, radius2/10.0, radius1/10.0, slices,
+               stacks, angle1, angle2);
+    break;
+      case 3:
+    gluDisk(quadObj, radius2/10.0, radius1/10.0, slices, stacks);
+    break;
+    }
+
+    if (doubleBuffer) {
+    glutSwapBuffers();
+    } else {
+    glFlush();
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 }
 
@@ -387,6 +607,7 @@ static void Args(int argc, char **argv)
     doubleBuffer = GL_FALSE;
 
     for (i = 1; i < argc; i++) {
+<<<<<<< HEAD
     if (strcmp(argv[i], "-sb") == 0) {
         doubleBuffer = GL_FALSE;
     } else if (strcmp(argv[i], "-db") == 0) {
@@ -403,6 +624,24 @@ static void Args(int argc, char **argv)
         }
         }
     }
+=======
+    if (strcmp(argv[i], "-sb") == 0) {
+        doubleBuffer = GL_FALSE;
+    } else if (strcmp(argv[i], "-db") == 0) {
+        doubleBuffer = GL_TRUE;
+    } else if (strcmp(argv[i], "-f") == 0) {
+        if (i+1 >= argc || argv[i+1][0] == '-') {
+        printf("-f (No file name).\n");
+        exit(1);
+        } else {
+        image = rgbImageLoad(argv[++i]);
+        if (image == NULL) {
+            printf("-f (Bad file name).\n");
+            exit(1);
+        }
+        }
+    }
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 }
 
@@ -414,8 +653,13 @@ int main(int argc, char **argv)
     Args(argc, argv);
 
     if (image == NULL) {
+<<<<<<< HEAD
         printf("No texture file.\n");
         exit(1);
+=======
+    printf("No texture file.\n");
+    exit(1);
+>>>>>>> 759c861c33ca23c3ad3fec69291f81cd79060d67
     }
 
     type = GLUT_RGB | GLUT_DEPTH;
